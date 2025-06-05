@@ -49,6 +49,7 @@ userRouter.get("/users/connections", userAuth, async (req,res) =>{
 
 
 userRouter.get("/user/feed",userAuth, async (req,res) =>{
+    try{
     const loginuser = req.user;
 
     const page = parseInt(req.query.page || 1);
@@ -72,5 +73,8 @@ userRouter.get("/user/feed",userAuth, async (req,res) =>{
     ]}).select(USER_SAFE_DATA).skip(skip).limit(limit);
 
     res.json(users);
+}catch(err){
+    console.err("Error in getting feed",err);
+}
 })
 module.exports = userRouter;
